@@ -1,3 +1,5 @@
 import telebot
 from telebot import types
-class View:
+class View(bot):
+
+    pass
