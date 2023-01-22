@@ -3,7 +3,7 @@ import numpy as np
 import emoji
 
 
-class View():
+class View:
 
     def __init__(self, bot):
         self.bot = bot
@@ -22,10 +22,10 @@ class View():
             __markup.row(*__button[i])
         self.bot.send_message(message.from_user.id, text, reply_markup=__markup)
 
-    def view_schedue(self, message, schedule, key, day_week):
+    def view_schedule(self, message, schedule, key, day_week):
 
         __weekdays = ['Понедельник', 'Вторник', 'Среда', 'Четверг',
-                    'Пятница', 'Суббота', 'Воскресенье']
+                      'Пятница', 'Суббота', 'Воскресенье']
 
         if key == "I неделя":
             key = "Рассписание на I неделю:"
@@ -33,21 +33,17 @@ class View():
             key = "Рассписание на II неделю:"
         elif key == "На сегодня":
             key = "Рассписание на сегодня:"
-            __weekdays = [__weekdays[day_week-1]]
+            __weekdays = [__weekdays[day_week - 1]]
         elif key == "На завтра":
             key = "Рассписание на завтра:"
-            __weekdays = [__weekdays[day_week-1]]
+            __weekdays = [__weekdays[day_week - 1]]
 
         self.bot.send_message(message.from_user.id, key)
         print(schedule)
-        print(len(schedule)-1)
+        print(len(schedule) - 1)
         print(len(schedule[0]))
         for i in range(len(schedule)):
-            __mass = []
-            __mass.append(emoji.emojize(':green_circle:'))
-            __mass.append('\t')
-            __mass.append(__weekdays[i])
-            __mass.append('\n'+'\n')
+            __mass = [emoji.emojize(':green_circle:'), '\t', __weekdays[i], '\n' + '\n']
             print(i)
             for j in range(len(schedule[i][0])):
                 print(j)
@@ -70,4 +66,3 @@ class View():
                 __mass.append('\n')
 
             self.bot.send_message(message.from_user.id, ''.join(map(str, __mass)))
-

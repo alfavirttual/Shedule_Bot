@@ -1,6 +1,7 @@
 import psycopg2
 from config import host, user, password, db_name, port
 
+
 class PostgreSQL:
     "Класс взаимодействия с базой данных PostgresSQL"
 
@@ -30,10 +31,10 @@ class PostgreSQL:
         try:
             self.__connection = \
                 psycopg2.connect(host=self.__host,
-                                port=self.__port,
-                                user=self.__user,
-                                password=self.__password,
-                                database=self.__database)
+                                 port=self.__port,
+                                 user=self.__user,
+                                 password=self.__password,
+                                 database=self.__database)
             self.__cursor = self.__connection.cursor()
 
         except Exception as ex:
@@ -44,7 +45,6 @@ class PostgreSQL:
     def __close(self):
         self.__connection.close()
         print("[INFO] PostgreSQL connection closed")
-
 
     def create_table(self, table_name, table_structure):
         query = "CREATE TABLE " + table_name + table_structure
@@ -60,12 +60,12 @@ class PostgreSQL:
         if kwargs:
             keys = kwargs.keys()
             values = tuple(kwargs.values())
-            query += "(" + ",".join(["%s"]*len(values)) % tuple(keys) + \
-                     ") VALUES (" + ",".join(["%s"]*len(values)) + ")"
+            query += "(" + ",".join(["%s"] * len(values)) % tuple(keys) + \
+                     ") VALUES (" + ",".join(["%s"] * len(values)) + ")"
 
         elif args:
             values = args
-            query += " VALUES(" + ",".join(["%s"]*len(values)) + ")"
+            query += " VALUES(" + ",".join(["%s"] * len(values)) + ")"
 
         self.__connect()
         self.__cursor.execute(query, values)
@@ -123,7 +123,7 @@ class PostgreSQL:
         values = tuple(kwargs.values()) + tuple(args)
         l = len(keys) - 1
         for i, key in enumerate(keys):
-            query += key+" = %s"
+            query += key + " = %s"
             if i < l:
                 query += ","
 
@@ -138,12 +138,12 @@ class PostgreSQL:
         if day == "all":
             query = "SELECT watch[:], discipline[:], classroom[:], teacher[:]" \
                     "FROM {0} " \
-                    "WHERE week={1} AND groupp='{2}'"\
+                    "WHERE week={1} AND groupp='{2}'" \
                 .format(table_name, week, groupp)
         else:
             query = "SELECT watch[:], discipline[:], classroom[:], teacher[:] " \
                     "FROM {0} " \
-                    "WHERE week_day = {1} AND week={2} AND groupp='{3}'"\
+                    "WHERE week_day = {1} AND week={2} AND groupp='{3}'" \
                 .format(table_name, day, week, groupp)
 
         self.__connect()
@@ -152,7 +152,8 @@ class PostgreSQL:
         self.__connection.commit()
         self.__close()
 
-        return(rows)
+        return rows
+
 
 '''
 db = PostgreSQL()
