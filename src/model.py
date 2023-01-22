@@ -135,15 +135,51 @@ class PostgreSQL:
         self.__connection.commit()
         self.__close()
 
+    def return_shedule(self, table_name, day, week, groupp):
+        if day == "all":
+            query = "SELECT watch[:] AND discipline[:] AND classroom[:] AND teacher[:]" \
+                    "FROM {0} " \
+                    "WHERE week={1} AND groupp={2}"\
+                .format(table_name, week, groupp)
+        else:
+            query = "SELECT watch[:] AND discipline[:] AND classroom[:] AND teacher[:] " \
+                    "FROM {0} " \
+                    "WHERE week_day = {1} AND week={2} AND groupp={3}"\
+                .format(table_name, day, week, groupp)
+
+
+        print(groupp)
+
+        self.__connect()
+        self.__cursor.execute(query)
+        rows = self.__cursor.fetchall()
+        self.__connection.commit()
+        self.__close()
+        return(rows)
 
 db = PostgreSQL()
-table_structure = "(id serial PRIMARY KEY," \
+first_table_structure = "(id serial PRIMARY KEY," \
                   "user_name varchar(20) NOT NULL," \
                   "groupp varchar(20) NOT NULL," \
                   "admin bool DEFAULT False)"
 
+second_table_structure = "(id serial PRIMARY KEY," \
+                         "groupp varchar(20) NOT NULL," \
+                         "week bool NOT NULL," \
+                         "week_day smallint NOT NULL," \
+                         "watch smallint[] NOT NULL," \
+                         "discipline varchar(30)[] NOT NULL," \
+                         "classroom varchar(10)[] NOT NULL," \
+                         "teacher varchar(20)[] NOT NULL)"
 
-db.create_table("tab2", table_structure)
+
+
+db.create_table("users", first_table_structure)
+#db.create_table("sсhedule", second_table_structure)
+a = db.return_shedule("sсhedule", 'all', True, "'ЭВМ'")
+b = db.select_all("sсhedule")
+print(a)
+
 '''
 db.paste("test", id='1', first_name="lolishe", name='ata')
 a = db.select_all("test")

@@ -31,12 +31,25 @@ def main():
         @bot.message_handler(content_types='text')
         def upload_db(message):
             model.paste("tab2", groupp=message.text, user_name=message.from_user.username)
-
-
-        @bot.message_handler(content_types='text')
-        def key_logger(message):
-            view.send_message(message, message.text)
+            text = "Показать рассписание?"
+            button_name = ["I неделя", "II неделя", "На сегодня", "На завтра"]
+            coord = [2,2]
             view.create_button(message, button_name, coord, text)
+            button_hendler(button_name)
+
+    def button_hendler(key):
+        @bot.message_handler(content_types='text')
+        def button(message, key):
+            if not (message.text in key):
+                text = "Введите корректный запрос!"
+                view.send_message(message, text)
+                text = "Показать рассписание?"
+                view.send_message(message, text)
+                button_hendler(key)
+                return
+            else:
+                pass
+
 
 
     print("[INFO] Bot is started")
