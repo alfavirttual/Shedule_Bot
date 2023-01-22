@@ -64,12 +64,14 @@ def main():
                 __schedule = model.return_schedule("sсhedule", __day_week, bool(__num_week), __group)
             elif message.text == "На завтра":
                 if __day_week == 7: __day_week = 1
+                else: __day_week += 1
                 __schedule = model.return_schedule("sсhedule", __day_week, bool(__num_week), __group)
             elif message.text == "I неделя":
                 __schedule = model.return_schedule("sсhedule", 'all', True, __group)
             elif message.text == "I неделя":
                 __schedule = model.return_schedule("sсhedule", 'all', False, __group)
-            view.view_schedue(message, __schedule,  message.text)
+            view.view_schedue(message, __schedule,  message.text, __day_week)
+        print('fdfdf')
         bot.register_next_step_handler(message, button_hendler)
 
     print("[INFO] Bot is started")
