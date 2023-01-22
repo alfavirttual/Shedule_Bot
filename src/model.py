@@ -1,7 +1,6 @@
 import psycopg2
 from config import host, user, password, db_name, port
 
-
 class PostgreSQL:
     "Класс взаимодействия с базой данных PostgresSQL"
 
@@ -135,26 +134,24 @@ class PostgreSQL:
         self.__connection.commit()
         self.__close()
 
-    def return_shedule(self, table_name, day, week, groupp):
+    def return_schedule(self, table_name, day, week, groupp):
         if day == "all":
-            query = "SELECT watch[:] AND discipline[:] AND classroom[:] AND teacher[:]" \
+            query = "SELECT watch[:], discipline[:], classroom[:], teacher[:]" \
                     "FROM {0} " \
                     "WHERE week={1} AND groupp={2}"\
                 .format(table_name, week, groupp)
         else:
-            query = "SELECT watch[:] AND discipline[:] AND classroom[:] AND teacher[:] " \
+            query = "SELECT watch[:], discipline[:], classroom[:], teacher[:] " \
                     "FROM {0} " \
                     "WHERE week_day = {1} AND week={2} AND groupp={3}"\
                 .format(table_name, day, week, groupp)
-
-
-        print(groupp)
 
         self.__connect()
         self.__cursor.execute(query)
         rows = self.__cursor.fetchall()
         self.__connection.commit()
         self.__close()
+
         return(rows)
 
 db = PostgreSQL()
@@ -176,9 +173,13 @@ second_table_structure = "(id serial PRIMARY KEY," \
 
 db.create_table("users", first_table_structure)
 #db.create_table("sсhedule", second_table_structure)
-a = db.return_shedule("sсhedule", 'all', True, "'ЭВМ'")
+a = db.return_schedule("sсhedule", "all", True, "'ЭВМ'")
 b = db.select_all("sсhedule")
 print(a)
+print(a[0])
+print(a[2][2])
+print(a[2][2][1])
+print(len(a))
 
 '''
 db.paste("test", id='1', first_name="lolishe", name='ata')
