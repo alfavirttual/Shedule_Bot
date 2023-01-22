@@ -138,12 +138,12 @@ class PostgreSQL:
         if day == "all":
             query = "SELECT watch[:], discipline[:], classroom[:], teacher[:]" \
                     "FROM {0} " \
-                    "WHERE week={1} AND groupp={2}"\
+                    "WHERE week={1} AND groupp='{2}'"\
                 .format(table_name, week, groupp)
         else:
             query = "SELECT watch[:], discipline[:], classroom[:], teacher[:] " \
                     "FROM {0} " \
-                    "WHERE week_day = {1} AND week={2} AND groupp={3}"\
+                    "WHERE week_day = {1} AND week={2} AND groupp='{3}'"\
                 .format(table_name, day, week, groupp)
 
         self.__connect()
@@ -154,6 +154,7 @@ class PostgreSQL:
 
         return(rows)
 
+'''
 db = PostgreSQL()
 first_table_structure = "(id serial PRIMARY KEY," \
                   "user_name varchar(20) NOT NULL," \
@@ -180,7 +181,7 @@ print(a[0])
 print(a[2][2])
 print(a[2][2][1])
 print(len(a))
-
+'''
 '''
 db.paste("test", id='1', first_name="lolishe", name='ata')
 a = db.select_all("test")

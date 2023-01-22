@@ -32,34 +32,37 @@ class View():
         elif key == "II неделя":
             key = "Рассписание на II неделю:"
         elif key == "На сегодня":
-            key = "Рассписание на II неделю:"
+            key = "Рассписание на сегодня:"
         elif key == "На завтра":
-            key = "Рассписание на II неделю:"
+            key = "Рассписание на завтра:"
         self.bot.send_message(message.from_user.id, key)
-
+        print(schedule)
+        print(len(schedule))
+        print(len(schedule[0]))
         for i in range(len(schedule)):
-            __mass.append(emoji.emojize(':green_circle:', use_aliases=True))
+            __mass.append(emoji.emojize(':green_circle:'))
             __mass.append('\t')
             __mass.append(__weekdays[i])
-            __mass.append('\n')
-
-            for j in range(len(schedule[i])):
-                __mass.append(emoji.emojize(':books:', use_aliases=True))
+            __mass.append('\n'+'\n')
+            print(i)
+            for j in range(len(schedule[0][i])):
+                print(j)
+                __mass.append(emoji.emojize(':books:'))
                 __mass.append('\t')
                 __mass.append(schedule[i][1][j])
                 __mass.append('\n')
-                __mass.append(emoji.emojize(':alarm_clock:', use_aliases=True))
+                __mass.append(emoji.emojize(':alarm_clock:'))
                 __mass.append('\t')
                 __mass.append(schedule[i][0][j])
                 __mass.append('\n')
-                __mass.append(emoji.emojize(':door:', use_aliases=True))
+                __mass.append(emoji.emojize(':door:'))
                 __mass.append('\t')
                 __mass.append(schedule[i][2][j])
                 __mass.append('\n')
-                __mass.append(emoji.emojize(':trollface:', use_aliases=True))
+                __mass.append(emoji.emojize(':man_teacher:'))
                 __mass.append('\t')
                 __mass.append(schedule[i][3][j])
                 __mass.append('\n')
                 __mass.append('\n')
 
-            self.bot.send_message(message.from_user.id, ''.join(map(str, schedule)))
+            self.bot.send_message(message.from_user.id, ''.join(map(str, __mass)))

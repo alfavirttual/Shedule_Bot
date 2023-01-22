@@ -57,8 +57,9 @@ def main():
             __num_week = 1
             __day_week = date.today().isoweekday()
             __group = model.select("users",
-                                   "username={0}".format(message.from_user.username),
-                                   "group")
+                                   "user_name='{0}'".format(message.from_user.username),
+                                   "groupp")
+            __group = __group[0][0]
             if message.text == "На сегодня":
                 __schedule = model.return_schedule("sсhedule", __day_week, bool(__num_week), __group)
             elif message.text == "На завтра":
@@ -68,7 +69,7 @@ def main():
                 __schedule = model.return_schedule("sсhedule", 'all', True, __group)
             elif message.text == "I неделя":
                 __schedule = model.return_schedule("sсhedule", 'all', False, __group)
-            view.view_schedue(message, __schedule,  button_name)
+            view.view_schedue(message, __schedule,  message.text)
         bot.register_next_step_handler(message, button_hendler)
 
     print("[INFO] Bot is started")
