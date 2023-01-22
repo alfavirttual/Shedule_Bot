@@ -25,32 +25,33 @@ def main():
     __day_week = date.today().isoweekday()
     __time = datetime.now().time()
     __group = None
+    __save = False
     button_name = ["I неделя", "II неделя", "На сегодня", "На завтра"]
 
     @bot.message_handler(commands=['start'])
     def send_message(message):
         view.send_message(message, "Здравствуйте!")
-        view.send_message(message, "Укажи имя группы")
-        upload_user_db(message)
+        #проверка есть ли ползователь с таким ник неймом в базе данных
+        view.send_message(message, "Для дальнейше работы с ботом необходима регистрация")
+        view.send_message(message, "Укажите название группы")
+        @bot.message_handler(content_types='text')
+        def register(message):
+            model.paste("users", groupp=message.text, user_name=message.from_user.username)
+            # проверка есть ли такая группа в бд
+            view.send_message(message, "Вы успешно зарегестрированны!")
+            text = "Показать рассписание?"
+            coord = [2, 2]
+            view.create_button(message, button_name, coord, text)
+            bot.register_next_step_handler(message, button_hendler)
 
-    def upload_user_db(message):
-        model.paste("users", groupp=message.text, user_name=message.from_user.username)
-        text = "Показать рассписание?"
-        coord = [2,2]
-        view.create_button(message, button_name, coord, text)
 
 
-
-    @bot.message_handler(content_types='text')
-    def button(message):
-        print(2)
-        print(message.text)
+    def button_hendler(message):
         if not (message.text in  button_name):
-            text = "Введите корректный запрос!"
+            text = "Введён не корректный запрос!"
             view.send_message(message, text)
             text = "Показать рассписание?"
             view.send_message(message, text)
-            button(message,  button_name)
         else:
             __schedule = None
             __num_week = 1
@@ -68,7 +69,7 @@ def main():
             elif message.text == "I неделя":
                 __schedule = model.return_schedule("sсhedule", 'all', False, __group)
             view.view_schedue(message, __schedule,  button_name)
-
+        bot.register_next_step_handler(message, button_hendler)
 
     print("[INFO] Bot is started")
     bot.infinity_polling()
