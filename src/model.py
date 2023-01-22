@@ -138,11 +138,12 @@ class PostgreSQL:
 
 db = PostgreSQL()
 table_structure = "(id serial PRIMARY KEY," \
-                  "first_name varchar(50) NOT NULL," \
-                  "name varchar(50) NOT NULL)"
+                  "user_name varchar(20) NOT NULL," \
+                  "groupp varchar(20) NOT NULL," \
+                  "admin bool DEFAULT False)"
 
 
-db.create_table("test", table_structure)
+db.create_table("tab2", table_structure)
 '''
 db.paste("test", id='1', first_name="lolishe", name='ata')
 a = db.select_all("test")

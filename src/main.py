@@ -30,7 +30,7 @@ def main():
         view.send_message(message, "Укажи имя группы")
         @bot.message_handler(content_types='text')
         def upload_db(message):
-            model.paste("test", id='1', first_name="message.text", name='ata')
+            model.paste("tab2", groupp=message.text, user_name=message.from_user.username)
 
 
         @bot.message_handler(content_types='text')
