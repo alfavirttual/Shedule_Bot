@@ -135,6 +135,7 @@ class PostgreSQL:
         self.__connection.commit()
         self.__close()
 
+
 db = PostgreSQL()
 table_structure = "(id serial PRIMARY KEY," \
                   "first_name varchar(50) NOT NULL," \
@@ -142,6 +143,7 @@ table_structure = "(id serial PRIMARY KEY," \
 
 
 db.create_table("test", table_structure)
+'''
 db.paste("test", id='1', first_name="lolishe", name='ata')
 a = db.select_all("test")
 b = db.select("test", "id=1", "first_name")
@@ -150,3 +152,4 @@ c = db.select_all("test")
 print(a)
 print(b)
 print(c)
+'''
