@@ -5,14 +5,19 @@ from model import PostgreSQL
 from datetime import date, datetime
 from bot import Bot
 
-class Controller:
+
 
 
 def main():
     bot = Bot().return_bot()
     view = View(bot)
     model = PostgreSQL()
+    controller = Controller(model, view, bot)
+    controller.hendler()
 
+    print("[INFO] Bot is started")
+    bot.infinity_polling()
+'''
     __num_week = 1
     __day_week = date.today().isoweekday()
     __time = datetime.now().time()
@@ -65,9 +70,9 @@ def main():
             view.view_schedule(message, __schedule, message.text, __day_week)
         view.send_message(message, "Показать рассписание?")
         bot.register_next_step_handler(message, button_handler)
+'''
 
-    print("[INFO] Bot is started")
-    bot.infinity_polling()
+
 
 
 if __name__ == '__main__':

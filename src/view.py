@@ -5,6 +5,11 @@ import emoji
 
 class View:
 
+    __markup = None
+    __button = None
+    __weekdays = None
+    __mass = None
+
     def __init__(self, bot):
         self.bot = bot
 
@@ -39,14 +44,9 @@ class View:
             __weekdays = [__weekdays[day_week - 1]]
 
         self.bot.send_message(message.from_user.id, key)
-        print(schedule)
-        print(len(schedule) - 1)
-        print(len(schedule[0]))
         for i in range(len(schedule)):
             __mass = [emoji.emojize(':green_circle:'), '\t', __weekdays[i], '\n' + '\n']
-            print(i)
             for j in range(len(schedule[i][0])):
-                print(j)
                 __mass.append(emoji.emojize(':books:'))
                 __mass.append('\t')
                 __mass.append(schedule[i][1][j])
