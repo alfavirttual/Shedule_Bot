@@ -38,7 +38,6 @@ class Controller:
 
             if not (message.text in button_name):
                 self.view.send_message(message, "Введён не корректный запрос!")
-                self.view.send_message(message, "Показать рассписание?")
             else:
                 __schedule = None
                 __num_week = 1
